@@ -1,0 +1,23 @@
+<!-- mentor_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Mentors - Freelancer Hub{% endblock %}
+
+{% block content %}
+    <h1 class="text-center my-5">Meet Our Mentors</h1>
+
+    <div class="row">
+        {% for mentor in mentors %}
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-lg border-light rounded">
+                    <img src="{{ mentor.profile_picture.url }}" class="card-img-top" alt="{{ mentor.name }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ mentor.name }}</h5>
+                        <p class="card-text">{{ mentor.bio|truncatewords:15 }}</p>
+                        <a href="{% url 'mentors:mentor_detail' mentor.id %}" class="btn btn-info">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Subscriptions - Freelancer Hub{% endblock %}
+
+{% block content %}
+<h1 class="text-center my-5 text-primary">Explore Our Subscription Plans</h1>
+
+<!-- Subscription Categories -->
+<ul class="nav nav-tabs justify-content-center" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#software" role="tab">Software & Tools</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#cloud" role="tab">Cloud Services</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#productivity" role="tab">Productivity Apps</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#learning" role="tab">Learning Platforms</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#freelancing" role="tab">Freelancing Platforms</a>
+    </li>
+</ul>
+
+<!-- Tab Content -->
+<div class="tab-content my-5">
+    <!-- Software & Tools -->
+    <div class="tab-pane fade show active" id="software" role="tabpanel">
+        <div class="row justify-content-center">
+            {% for subscription in software_subscriptions %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-lg border-light rounded hover-card">
+                        <div class="card-header text-center bg-primary text-white">
+                            <i class="bi bi-tools"></i>
+                            <h5 class="card-title">{{ subscription.name }}</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-price text-success">${{ subscription.price }}/month</h3>
+                            <p class="card-text">{{ subscription.description }}</p>
+                            <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
+                            <div>
+                                <a href="{% url 'cart:add_to_cart' subscription.id %}" class="btn btn-secondary btn-sm">Add to Cart</a>
+                                <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Cloud Services -->
+    <div class="tab-pane fade" id="cloud" role="tabpanel">
+        <div class="row justify-content-center">
+            {% for subscription in cloud_subscriptions %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-lg border-light rounded hover-card">
+                        <div class="card-header text-center bg-primary text-white">
+                            <i class="bi bi-cloud"></i>
+                            <h5 class="card-title">{{ subscription.name }}</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-price text-success">${{ subscription.price }}/month</h3>
+                            <p class="card-text">{{ subscription.description }}</p>
+                            <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
+                            <div>
+                                <a href="{% url 'cart:add_to_cart' subscription.id %}" class="btn btn-secondary btn-sm">Add to Cart</a>
+                                <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Productivity Apps -->
+    <div class="tab-pane fade" id="productivity" role="tabpanel">
+        <div class="row justify-content-center">
+            {% for subscription in productivity_subscriptions %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-lg border-light rounded hover-card">
+                        <div class="card-header text-center bg-primary text-white">
+                            <i class="bi bi-bar-chart-fill"></i>
+                            <h5 class="card-title">{{ subscription.name }}</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-price text-success">${{ subscription.price }}/month</h3>
+                            <p class="card-text">{{ subscription.description }}</p>
+                            <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
+                            <div>
+                                <a href="{% url 'cart:add_to_cart' subscription.id %}" class="btn btn-secondary btn-sm">Add to Cart</a>
+                                <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Learning Platforms -->
+    <div class="tab-pane fade" id="learning" role="tabpanel">
+        <div class="row justify-content-center">
+            {% for subscription in learning_subscriptions %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-lg border-light rounded hover-card">
+                        <div class="card-header text-center bg-primary text-white">
+                            <i class="bi bi-book"></i>
+                            <h5 class="card-title">{{ subscription.name }}</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-price text-success">${{ subscription.price }}/month</h3>
+                            <p class="card-text">{{ subscription.description }}</p>
+                            <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
+                            <div>
+                                <a href="{% url 'cart:add_to_cart' subscription.id %}" class="btn btn-secondary btn-sm">Add to Cart</a>
+                                <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Freelancing Platforms -->
+    <div class="tab-pane fade" id="freelancing" role="tabpanel">
+        <div class="row justify-content-center">
+            {% for subscription in freelancing_subscriptions %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-lg border-light rounded hover-card">
+                        <div class="card-header text-center bg-primary text-white">
+                            <i class="bi bi-briefcase-fill"></i>
+                            <h5 class="card-title">{{ subscription.name }}</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-price text-success">${{ subscription.price }}/month</h3>
+                            <p class="card-text">{{ subscription.description }}</p>
+                            <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
+                            <div>
+                                <a href="{% url 'cart:add_to_cart' subscription.id 'subscription' %}" class="btn btn-primary">Add to Cart</a>
+                                <!-- In subscriptions page -->
+                                <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action Section -->
+<div class="text-center my-5">
+    <h2 class="display-4">Why Choose Us?</h2>
+    <p class="lead">Unlock premium tools and platforms designed to elevate your freelancing career. Subscribe to the tools that matter!</p>
+    <a href="#contact" class="btn btn-info btn-lg">Contact Us for More Info</a>
+</div>
+
+{% endblock %}

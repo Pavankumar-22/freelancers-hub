@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Freelancer Success Stories</h1>
+    <div class="row">
+        {% for story in stories %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm border-light rounded">
+                <div class="card-body">
+                    <h5 class="card-title">{{ story.name }}</h5>
+                    <p class="card-text">{{ story.story }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No stories available at the moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

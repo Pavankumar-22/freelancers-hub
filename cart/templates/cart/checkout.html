@@ -1,0 +1,48 @@
+<!-- cart/templates/cart/checkout.html -->
+{% extends 'base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center text-primary">Checkout</h1>
+
+    {% if is_subscription %}
+        <!-- Subscription Checkout -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ subscription.name }}</h3>
+                        <p class="card-text">{{ subscription.description }}</p>
+                        <h4 class="text-success">Price: ${{ subscription.price }}/month</h4>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-lg w-100 mt-3">Confirm Subscription</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elif cart %}
+        <!-- Cart Checkout -->
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Your Cart Items</h4>
+                <!-- Display cart items -->
+                <ul>
+                    {% for item_id, quantity in cart.items %}
+                        <li>Item {{ item_id }}: Quantity {{ quantity }}</li>
+                    {% endfor %}
+                </ul>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success btn-lg mt-3">Confirm Order</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <p>Your cart is empty or no subscription selected!</p>
+    {% endif %}
+</div>
+{% endblock %}

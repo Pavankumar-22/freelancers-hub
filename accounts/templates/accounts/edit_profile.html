@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Heading Section -->
+    <div class="text-center mb-4">
+        <h2 class="display-4">Edit Your Profile</h2>
+        <p class="lead text-muted">Update your profile picture and personal information below.</p>
+    </div>
+
+    <!-- Form Section -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="row">
+            <!-- Profile Picture Section -->
+            <div class="col-md-6">
+                <div class="card shadow-lg border-light rounded-3">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">Profile Picture</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ profile_form.as_p }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="col-md-6">
+                <div class="card shadow-lg border-light rounded-3">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">Personal Information</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ user_form.as_p }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Changes Button -->
+        <div class="mt-4 text-center">
+            <button type="submit" class="btn btn-primary btn-lg shadow-sm">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+<!-- Optional: Add CSS for further enhancements -->
+<style>
+    /* Card Enhancements */
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+        padding: 15px;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+</style>
+
+{% endblock %}

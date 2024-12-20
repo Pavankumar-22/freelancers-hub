@@ -1,0 +1,62 @@
+<!-- navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home:dashboard' %}">Freelancer Hub</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home:dashboard' %}">Home</a>
+                </li>
+
+                <!-- Marketplace Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Marketplace
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'marketplace:product_list' %}">Products</a></li>
+                        <li><a class="dropdown-item" href="{% url 'marketplace:categories' %}">Categories</a></li>
+                        <li><a class="dropdown-item" href="{% url 'marketplace:bundled_offers' %}">Bundled Offers</a></li>
+                        <li><a class="dropdown-item" href="{% url 'marketplace:stories' %}">Freelancer Success Stories</a></li>
+                        <li><a class="dropdown-item" href="{% url 'marketplace:consultation' %}">Consultation Services</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services:service_list' %}">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'subscriptions:subscription_list' %}">Subscriptions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blogs:blog_list' %}">Blogs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mentors:mentor_list' %}">Mentors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:profile' %}">Profile</a>
+                </li>
+                
+                {% if user.is_authenticated %}
+
+                
+                    <li class="nav-item">
+                        <a href="{% url 'cart:cart_detail' %}" class="btn btn-primary">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                </a>
+                    </li> 
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

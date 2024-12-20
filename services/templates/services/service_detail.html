@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <!-- Service Name and Header -->
+    <h1 class="text-center display-4 mb-4">{{ service.name }}</h1>
+    
+    <!-- Image and Overview -->
+    <div class="row mb-4">
+        <div class="col-md-6 text-center">  
+            <!-- <img src="{{ service.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ service.name }}"> -->
+            {% if service.image %}
+            <img src="{{ service.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ service.name }}">
+        {% else %}
+            <img src="{% static 'images/default_service.png' %}" class="img-fluid rounded shadow-sm" alt="Default Image">
+        {% endif %}        
+        
+        </div>
+        <div class="col-md-6">
+            <h3>Overview</h3>
+            <p>{{ service.description }}</p>
+            <h4 class="text-success">Price: ${{ service.price }}</h4>
+            <a href="#" class="btn btn-primary btn-lg mt-3">Purchase Now</a>
+            <a href="{% url 'services:service_list' %}" class="btn btn-secondary btn-lg mt-3">Back to Services</a>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Features Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>Key Features</h3>
+            <ul class="list-group list-group-flush">
+                {% for feature in service.features.all %}
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success"></i> {{ feature }}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted">No features listed for this service.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- User Reviews -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>User Reviews</h3>
+            {% if service.reviews.exists %}
+                {% for review in service.reviews.all %}
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ review.user.username }}</h5>
+                            <p class="card-text">{{ review.comment }}</p>
+                            <p class="text-muted"><small>Rating: {{ review.rating }} / 5</small></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">No reviews yet. Be the first to review this service!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- FAQs Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>Frequently Asked Questions</h3>
+            <div class="accordion" id="faqAccordion">
+                {% for faq in service.faqs.all %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                                {{ faq.question }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                {{ faq.answer }}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">No FAQs available for this service.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

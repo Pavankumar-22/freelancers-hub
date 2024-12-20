@@ -1,0 +1,65 @@
+/* Styles specifically for login and signup pages */
+body.login-page .container {
+    max-width: 500px;
+    margin-top: 50px;
+}
+
+body.login-page .card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.login-page .card-header {
+    background-color: #007bff;
+    color: white;
+}
+
+body.login-page .card-body {
+    padding: 30px;
+    background-color: white;
+}
+
+body.login-page .form-control {
+    border-radius: 6px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    margin-bottom: 15px;
+}
+
+body.login-page .btn {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Similar styles for the signup page */
+body.signup-page .container {
+    max-width: 500px;
+    margin-top: 50px;
+}
+
+body.signup-page .card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.signup-page .card-header {
+    background-color: #007bff;
+    color: white;
+}
+
+body.signup-page .card-body {
+    padding: 30px;
+    background-color: white;
+}
+
+body.signup-page .form-control {
+    border-radius: 6px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    margin-bottom: 15px;
+}
+
+body.signup-page .btn {
+    background-color: #007bff;
+    color: white;
+}

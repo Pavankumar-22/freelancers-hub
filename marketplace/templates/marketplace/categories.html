@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Product Categories</h1>
+    <div class="list-group">
+        {% for category in categories %}
+        <a href="{% url 'marketplace:product_list' %}?category={{ category }}" class="list-group-item list-group-item-action">
+            {{ category }}
+        </a>
+        {% empty %}
+        <p class="text-center">No categories available at the moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

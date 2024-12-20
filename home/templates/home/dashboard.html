@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h1 class="display-4">Welcome to Freelancers' Tools Hub</h1>
+        <p class="lead text-muted">Your one-stop hub for freelancing essentials and inspiration.</p>
+        
+        <!-- Profile Picture Section
+        <div class="my-4">
+            {% if user.userprofile.profile_picture %}
+                <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" class="rounded-circle" width="150" height="150">
+            {% else %}
+                <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" class="rounded-circle" width="150" height="150">
+            {% endif %}
+            <p class="mt-2">{{ user.username }}</p>
+        </div> -->
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="row">
+        <!-- Work Essentials Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-lg">
+                <img src="{% static 'images/work_essentials.jpg' %}" class="card-img-top" alt="Work Essentials">
+                <div class="card-body">
+                    <h5 class="card-title">Work Essentials</h5>
+                    <p class="card-text">Explore laptops, ergonomic chairs, and other must-haves for your workspace.</p>
+                    <a href="{% url 'marketplace:categories' %}" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Software & Subscriptions Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-lg">
+                <img src="{% static 'images/subscription-software-blog.jpg' %}" class="card-img-top" alt="Software & Subscriptions">
+                <div class="card-body">
+                    <h5 class="card-title">Software & Subscriptions</h5>
+                    <p class="card-text">Get tools like Adobe Suite, Canva, and project management apps.</p>
+                    <a href="#" class="btn btn-primary">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skill Development Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-lg">
+                <img src="{% static 'images/skills.png' %}" class="card-img-top" alt="Skill Development">
+                <div class="card-body">
+                    <h5 class="card-title">Skill Development</h5>
+                    <p class="card-text">Learn and grow with curated books and online courses tailored for freelancers.</p>
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
