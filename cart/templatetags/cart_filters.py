@@ -8,3 +8,10 @@ def multiply(value, arg):
         return value * arg
     except (ValueError, TypeError):
         return ''
+    
+@register.filter
+def replace(value, arg):
+    """
+    Replaces occurrences of `arg` in the `value` string with an empty string.
+    """
+    return value.replace(arg, "")

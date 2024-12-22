@@ -41,7 +41,7 @@
                             <p class="card-text">{{ subscription.description }}</p>
                             <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
                             <div>
-                                <a href="{% url 'cart:add_to_cart' subscription.id %}" class="btn btn-secondary btn-sm">Add to Cart</a>
+                                <a href="{% url 'cart:add_to_cart' subscription.id 'subscription' %}" class="btn btn-secondary btn-sm">Add to Cart</a>
                                 <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                             <p class="card-text">{{ subscription.description }}</p>
                             <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
                             <div>
-                                <a href="{% url 'cart:add_to_cart' subscription.id %}" class="btn btn-secondary btn-sm">Add to Cart</a>
+                                <a href="{% url 'cart:add_to_cart' subscription.id 'subscription' %}" class="btn btn-secondary btn-sm">Add to Cart</a>
                                 <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                             <p class="card-text">{{ subscription.description }}</p>
                             <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
                             <div>
-                                <a href="{% url 'cart:add_to_cart' subscription.id %}" class="btn btn-secondary btn-sm">Add to Cart</a>
+                                <a href="{% url 'cart:add_to_cart' subscription.id 'subscription' %}" class="btn btn-secondary btn-sm">Add to Cart</a>
                                 <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                             <p class="card-text">{{ subscription.description }}</p>
                             <a href="{{ subscription.link }}" target="_blank" class="btn btn-info btn-lg shadow-sm mb-3">Explore</a>
                             <div>
-                                <a href="{% url 'cart:add_to_cart' subscription.id %}" class="btn btn-secondary btn-sm">Add to Cart</a>
+                                <a href="{% url 'cart:add_to_cart' subscription.id 'subscription' %}" class="btn btn-secondary btn-sm">Add to Cart</a>
                                 <a href="{% url 'cart:place_order' subscription.id %}" class="btn btn-success btn-sm">Place Order Now</a>
                             </div>
                         </div>

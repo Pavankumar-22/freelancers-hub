@@ -13,47 +13,47 @@ def add_to_cart(request, item_id, item_type):
     :param item_id: The ID of the item (product or subscription)
     :param item_type: The type of the item ('product' or 'subscription')
     """
-    # Check if the item type is valid
+    # Ensure the item_type is either 'product' or 'subscription'
     if item_type not in ['product', 'subscription']:
         raise Http404("Invalid item type")
 
-    # Get or initialize the cart in the session
+    # Initialize the cart if it doesn't exist
     if 'cart' not in request.session:
         request.session['cart'] = {}
 
     cart = request.session['cart']
 
-    # Handle adding a product
+    # Handle adding a product to the cart
     if item_type == 'product':
-        # Fetch the product
         product = get_object_or_404(Product, id=item_id)
-
-        # Add or update the product in the cart
-        if str(item_id) in cart:
-            cart[str(item_id)]['quantity'] += 1
+        # Use a composite key of item_type and item_id to ensure unique entries
+        cart_key = f"product_{item_id}"
+        if cart_key in cart:
+            cart[cart_key]['quantity'] += 1
         else:
-            cart[str(item_id)] = {
+            cart[cart_key] = {
                 'name': product.name,
                 'price': float(product.price),  # Convert Decimal to float for serialization
                 'quantity': 1,
+                'type': 'product',
             }
 
-    # Handle adding a subscription
+    # Handle adding a subscription to the cart
     elif item_type == 'subscription':
-        # Fetch the subscription
         subscription = get_object_or_404(Subscription, id=item_id)
-
-        # Add or update the subscription in the cart
-        if str(item_id) in cart:
-            cart[str(item_id)]['quantity'] += 1
+        # Use a composite key of item_type and item_id to ensure unique entries
+        cart_key = f"subscription_{item_id}"
+        if cart_key in cart:
+            cart[cart_key]['quantity'] += 1
         else:
-            cart[str(item_id)] = {
+            cart[cart_key] = {
                 'name': subscription.name,
                 'price': float(subscription.price),  # Convert Decimal to float for serialization
                 'quantity': 1,
+                'type': 'subscription',
             }
 
-    # Save the cart back to the session
+    # Save the updated cart to session
     request.session['cart'] = cart
     request.session.modified = True
 
@@ -62,7 +62,6 @@ def add_to_cart(request, item_id, item_type):
         return redirect('marketplace:product_list')
     elif item_type == 'subscription':
         return redirect('subscriptions:subscription_list')
-
 
 @login_required
 def view_cart(request):
@@ -75,8 +74,8 @@ def view_cart(request):
         cart_items = []
 
     return render(request, 'marketplace/cart.html', {'cart_items': cart_items})
-from decimal import Decimal
 
+from decimal import Decimal
 @login_required
 def cart_detail(request):
     # Retrieve the cart from session and ensure it defaults to a dictionary
@@ -92,9 +91,10 @@ def cart_detail(request):
     total_subscription_price = Decimal('0.00')  # Total price for subscriptions
 
     # Iterate over the cart to separate products and subscriptions
-    for product_id, item in cart.items():
-        if 'subscription_id' in item:  # This item is a subscription
-            subscription = get_object_or_404(Subscription, id=item['subscription_id'])
+    for cart_key, item in cart.items():
+        if cart_key.startswith("subscription_"):  # This item is a subscription
+            subscription_id = cart_key.split('_')[1]  # Extract subscription ID from the key
+            subscription = get_object_or_404(Subscription, id=subscription_id)
             total_item_price = Decimal(item['quantity']) * Decimal(item['price'])
             subscription_items.append({
                 'subscription': subscription,
@@ -103,7 +103,8 @@ def cart_detail(request):
                 'total_item_price': total_item_price
             })
             total_subscription_price += total_item_price
-        else:  # This item is a product
+        elif cart_key.startswith("product_"):  # This item is a product
+            product_id = cart_key.split('_')[1]  # Extract product ID from the key
             product = get_object_or_404(Product, id=product_id)
             total_item_price = Decimal(item['quantity']) * Decimal(item['price'])
             cart_items.append({
@@ -125,43 +126,32 @@ def cart_detail(request):
         'grand_total': grand_total
     })
 
-def clear_session(request):
-    request.session.flush()
-    return redirect('marketplace:product_list')
-
 @login_required
-def remove_from_cart(request, product_id):
-    # Retrieve the cart from session
+def remove_from_cart(request, item_id, item_type):
+    # Retrieve the cart from the session
     cart = request.session.get('cart', {})
 
-    # Remove the product from the cart if it exists
-    if str(product_id) in cart:
-        del cart[str(product_id)]
+    # Construct the key based on item type (product or subscription)
+    if item_type == 'product':
+        cart_key = f"product_{item_id}"
+    elif item_type == 'subscription':
+        cart_key = f"subscription_{item_id}"
+    else:
+        raise Http404("Invalid item type")
 
-    # Save the updated cart back to the session
+    # Check if the item exists and remove it
+    if cart_key in cart:
+        del cart[cart_key]
+        print(f"Removed {cart_key} from cart")
+
+    # Save the updated cart back to session
     request.session['cart'] = cart
+    request.session.modified = True
 
-    # Redirect to the cart details page
     return redirect('cart:cart_detail')
-# cart/views.py
-from django.shortcuts import render, get_object_or_404, redirect
-from subscriptions.models import Subscription  # Import Subscription model
-from .models import Cart  # Assuming you have a Cart model
 
-@login_required
-def checkout(request):
-    # Check if the user is checking out a subscription
-    subscription_id = request.GET.get('subscription_id')
-    if subscription_id:
-        subscription = get_object_or_404(Subscription, id=subscription_id)
-        return render(request, 'cart/checkout.html', {'subscription': subscription, 'is_subscription': True})
 
-    # Otherwise, proceed with the cart checkout
-    cart = request.session.get('cart', {})
-    if not cart:
-        return redirect('cart:cart_detail')
 
-    return render(request, 'cart/checkout.html', {'cart': cart, 'is_subscription': False})
 
 @login_required
 def place_order(request, subscription_id):
@@ -174,3 +164,27 @@ def place_order(request, subscription_id):
         return redirect('cart:view_cart')  # Redirect to cart or another page
 
     return render(request, 'cart/place_order.html', {'subscription': subscription})
+
+@login_required
+def checkout(request):
+    cart = request.session.get('cart', {})
+
+    if not cart or not any(item.get('quantity') for item in cart.values()):
+        return redirect('cart:cart_detail')
+
+    # Calculate total price and shipping cost
+    total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+    shipping_cost = cart.get('shipping_cost', 0)
+    grand_total = total_price + shipping_cost
+
+    # Add the total price for each item to the cart
+    for item in cart.values():
+        item['total_item_price'] = item['price'] * item['quantity']
+
+    return render(request, 'cart/checkout.html', {
+        'cart': cart,
+        'total_price': total_price,
+        'shipping_cost': shipping_cost,
+        'grand_total': grand_total,
+        'is_subscription': False
+    })
